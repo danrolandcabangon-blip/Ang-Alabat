@@ -86,7 +86,7 @@
             overflow: hidden; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
             background: #000;
-            aspect-ratio: 16/9; /* Ensures the iframe fits perfectly */
+            aspect-ratio: 16/9;
             cursor: pointer;
         }
         .video-frame iframe {
@@ -186,11 +186,10 @@
             <div class="video-frame" onclick="changeVideo()">
                 <div class="video-label" id="videoTitle">PULONG BATO TOUR</div>
                 <iframe id="videoPlayer" 
-                        src="https://www.youtube.com/embed/J_i3Oupb4R4?autoplay=1&mute=1&loop=1&playlist=J_i3Oupb4R4" 
+                        src="https://www.youtube.com/embed/J_i3Oupb4R4?autoplay=0&loop=1&playlist=J_i3Oupb4R4" 
                         allow="autoplay; encrypted-media" allowfullscreen>
                 </iframe>
             </div>
-            <p style="font-size: 10px; margin-top: 10px; opacity: 0.5; text-align: center;">Tip: Click the frame to switch videos</p>
         </div>
     </div>
 
@@ -199,7 +198,6 @@
     </div>
 
     <script>
-        // --- NAVIGATION SLIDER ---
         const shade = document.getElementById('navShade');
         let currentActive = document.getElementById('activeLink');
 
@@ -215,7 +213,6 @@
         const videoFrame = document.getElementById('videoPlayer');
         const videoTitle = document.getElementById('videoTitle');
         
-        // Using the YouTube IDs from your links
         const myVideos = [
             { title: "PULONG BATO TOUR", id: "J_i3Oupb4R4" },
             { title: "ALABAT ISLAND EXPERIENCE", id: "VEgYSAwmH4c" }
@@ -225,12 +222,11 @@
         function changeVideo() {
             vIdx = (vIdx + 1) % myVideos.length;
             const newId = myVideos[vIdx].id;
-            // Update iframe src with autoplay and loop enabled
-            videoFrame.src = `https://www.youtube.com/embed/${newId}?autoplay=1&mute=1&loop=1&playlist=${newId}`;
+            // Autoplay is set to 1 here so it plays with sound once the user interacts/clicks
+            videoFrame.src = `https://www.youtube.com/embed/${newId}?autoplay=1&loop=1&playlist=${newId}`;
             videoTitle.innerText = myVideos[vIdx].title;
         }
 
-        // --- DESTINATIONS LIST ---
         const myDestinations = [
             { name: "Pulong Bato", img: "pulongbato.jpg", short: "Iconic white rock formation.", long: "Pulong Bato is one of Alabat's most famous natural landmarks, featuring a stunning white stone structure surrounded by crystal clear waters." },
             { name: "Alabat Cove", img: "alabatcove.jpg", short: "Golden sunsets and calm seas.", long: "A serene escape offering breathtaking golden sunsets. The calm waters make it an ideal spot for peaceful afternoons." },
@@ -264,4 +260,5 @@
     </script>
 </body>
 </html>
+
 
