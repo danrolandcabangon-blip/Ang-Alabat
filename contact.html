@@ -10,58 +10,84 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
         body {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
                         url('background.jpg') no-repeat center center fixed; 
-            background-size: cover; color: white; min-height: 100vh; overflow-y: auto;
+            background-size: cover; color: white; min-height: 100vh; overflow-x: hidden;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* --- LOGO ANIMATIONS --- */
-        @keyframes slideUpLogo {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
+        /* --- LOGO & NAV --- */
         .top-left-logo {
-            position: absolute; top: 30px; left: 30px; width: 140px; 
-            z-index: 2000; animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            position: absolute; top: 20px; left: 20px; width: 100px; 
+            z-index: 2000; opacity: 0.9;
         }
 
-        .logo-wrapper { 
-            display: flex; justify-content: center; padding-top: 40px; width: 100%; 
-            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-        .nav-logo { height: 120px; width: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
+        .logo-wrapper { display: flex; justify-content: center; padding-top: 40px; width: 100%; }
+        .nav-logo { height: 80px; filter: drop-shadow(0 0 15px rgba(0,174,239,0.4)); }
 
-        /* --- NAVIGATION --- */
-        nav { display: flex; justify-content: center; padding: 20px; position: sticky; top: 0; z-index: 1000; }
-        .nav-container { 
-            position: relative; background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(15px); padding: 5px; border-radius: 50px; 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
+        nav { display: flex; justify-content: center; padding: 15px; position: sticky; top: 0; z-index: 1000; width: 100%; }
+        .nav-container {
+            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
+            padding: 5px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; max-width: 95vw; overflow-x: auto; scrollbar-width: none;
         }
+        .nav-container::-webkit-scrollbar { display: none; }
         
-        /* Your Requested CSS */
-        .nav-container a.active { opacity: 1; }
-        .nav-slider {
-            position: absolute; height: calc(100% - 10px); width: 80px;
-            background: rgba(255, 255, 255, 0.2); border-radius: 50px;
-            top: 5px; left: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
         .nav-links { display: flex; list-style: none; position: relative; z-index: 2; }
         .nav-links a { 
-            color: white; text-decoration: none; font-size: 11px; font-weight: 700; 
-            text-transform: uppercase; padding: 10px 20px; display: inline-block; 
-            transition: 0.3s; opacity: 0.6;
+            color: white; text-decoration: none; font-size: 10px; font-weight: 700; 
+            text-transform: uppercase; padding: 10px 18px; display: inline-block; 
+            transition: 0.3s; opacity: 0.6; white-space: nowrap;
+        }
+        .nav-links a.active { opacity: 1; }
+        
+        .nav-slider {
+            position: absolute; height: calc(100% - 10px);
+            background: rgba(0, 174, 239, 0.5); border-radius: 50px;
+            top: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* --- CONTENT --- */
-        .contact-content { text-align: center; max-width: 800px; padding: 40px 20px; }
-        .contact-text { font-size: 18px; font-weight: 700; line-height: 1.8; text-transform: uppercase; margin-bottom: 40px; }
-        .contact-text a { color: #00AEEF; text-decoration: none; }
-        .map-container { width: 100%; max-width: 600px; height: 350px; border: 5px solid white; border-radius: 40px; overflow: hidden; }
-        iframe { width: 100%; height: 100%; border: none; }
+        /* --- CONTACT CONTENT --- */
+        .contact-hero { text-align: center; padding: 40px 5%; max-width: 900px; animation: fadeIn 1s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .contact-title { font-size: clamp(30px, 8vw, 60px); font-weight: 900; line-height: 0.9; margin-bottom: 30px; }
+        .contact-title span { color: #00AEEF; }
+
+        .info-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; width: 100%; margin-bottom: 40px; 
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
+            padding: 30px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s; text-align: center;
+        }
+        .info-card:hover { background: rgba(255, 255, 255, 0.1); border-color: #00AEEF; }
+        .info-card h3 { font-size: 12px; text-transform: uppercase; color: #00AEEF; margin-bottom: 10px; letter-spacing: 2px; }
+        .info-card p, .info-card a { font-size: 16px; font-weight: 700; color: white; text-decoration: none; word-break: break-all; }
+
+        /* --- MAP SECTION --- */
+        .map-wrapper { 
+            width: 90%; max-width: 800px; border-radius: 40px; overflow: hidden; 
+            border: 4px solid white; box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+            position: relative; height: 400px; margin-bottom: 50px;
+        }
+        iframe { width: 100%; height: 100%; border: none; filter: grayscale(0.2) contrast(1.1); }
+
+        .map-btn {
+            position: absolute; bottom: 20px; right: 20px; background: white; 
+            color: black; padding: 12px 25px; border-radius: 50px; font-weight: 900;
+            text-decoration: none; font-size: 12px; text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: 0.3s;
+        }
+        .map-btn:hover { background: #00AEEF; color: white; transform: scale(1.05); }
+
+        @media (min-width: 1024px) {
+            .top-left-logo { width: 140px; top: 30px; left: 30px; }
+            .nav-logo { height: 100px; }
+        }
     </style>
 </head>
 <body>
@@ -85,15 +111,27 @@
         </div>
     </nav>
 
-    <div class="contact-content">
-        <p class="contact-text">
-            ALABAT TOURIST INFORMATION CENTER, ALABAT QUEZON.<br>
-            CONTACT NUMBER: <a href="tel:00078263117">0007-826-3117</a><br>
-            EMAIL: <a href="mailto:alabattourismoffice@gmail.com">alabattourismoffice@gmail.com</a>
-        </p>
+    <div class="contact-hero">
+        <h1 class="contact-title">SAY HELLO TO <span>ALABAT</span></h1>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Location</h3>
+                <p>Tourist Info Center, Alabat, Quezon</p>
+            </div>
+            <div class="info-card">
+                <h3>Call Us</h3>
+                <a href="tel:00078263117">0007-826-3117</a>
+            </div>
+            <div class="info-card">
+                <h3>Email Us</h3>
+                <a href="mailto:alabattourismoffice@gmail.com">alabattourismoffice@gmail.com</a>
+            </div>
+        </div>
 
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15467.435738814782!2d122.0003!3d14.1023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1e36789456789%3A0x123456789!2sAlabat%2C%20Quezon!5e0!3m2!1sen!2sph!4v1700000000000"></iframe>
+        <div class="map-wrapper">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15478.434316828518!2d122.0157973!3d14.1005278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1e2f9f9f9f9f9%3A0x123456789abcdef!2sAlabat%2C%20Quezon!5e0!3m2!1sen!2sph!4v1234567890"></iframe>
+            <a href="https://maps.google.com" target="_blank" class="map-btn">Get Directions</a>
         </div>
     </div>
 
@@ -107,22 +145,15 @@
         }
 
         function setActive(el, e) {
-            // Remove active class from previous
-            currentActive.classList.remove('active');
-            
-            // Set new active
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
             currentActive = el;
-            
-            // Move slider
             moveShade(el);
-
-            // If you want the link to actually navigate, remove 'e.preventDefault()'
-            // For now, I'm letting it navigate normally to your other files.
         }
 
-        // Initial position on load
         window.addEventListener('load', () => moveShade(currentActive));
+        window.addEventListener('resize', () => moveShade(currentActive));
     </script>
 </body>
 </html>
+
