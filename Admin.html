@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Alabat Tourism</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('background.jpg') no-repeat center center fixed; 
+            background-size: cover; color: white; min-height: 100vh;
+            padding: 20px;
+        }
+
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
+        }
+        .login-box {
+            background: rgba(255,255,255,0.05); padding: 40px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1); width: 350px; text-align: center;
+        }
+        .login-box input {
+            width: 100%; padding: 12px; margin-top: 10px; border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3);
+            color: white; outline: none;
+        }
+        .login-box button {
+            width: 100%; padding: 12px; margin-top: 20px; border-radius: 10px;
+            border: none; background: #00AEEF; color: white; font-weight: 900;
+            cursor: pointer; text-transform: uppercase;
+        }
+
+        #admin-content { display: none; }
+
+        .logo-wrapper { display: flex; justify-content: center; padding-top: 30px; width: 100%; }
+        .nav-logo { height: 70px; width: auto; display: block; }
+
+        nav { display: flex; justify-content: center; padding: 20px; position: sticky; top: 0; z-index: 1000; width: 100%; }
+        .nav-container {
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            padding: 10px 30px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+        }
+        .nav-container span { color: white; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; }
+        .logout-link { color: #ff4757; font-size: 10px; cursor: pointer; font-weight: 900; text-decoration: none; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 450px; gap: 20px; max-width: 1400px; margin: 40px auto; }
+        .glass-panel {
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px);
+            border-radius: 30px; padding: 30px; border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+
+        .sales-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px; border-radius: 25px; margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .sales-info h3 { font-size: 10px; text-transform: uppercase; opacity: 0.6; letter-spacing: 1.5px; margin-bottom: 5px; }
+        .sales-info p { font-size: 28px; font-weight: 900; color: #00AEEF; }
+        .btn-reset { background: rgba(255, 71, 87, 0.15); color: #ff4757; font-size: 9px; padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255, 71, 87, 0.3); cursor: pointer; font-weight: 800; text-transform: uppercase; transition: 0.3s; }
+        .btn-reset:hover { background: #ff4757; color: white; }
+
+        h2 { font-weight: 900; text-transform: uppercase; font-size: 18px; margin-bottom: 20px; color: #00AEEF; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; font-size: 11px; text-transform: uppercase; opacity: 0.5; padding: 15px; border-bottom: 1px solid #333; }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+
+        .inventory-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px; background: rgba(255,255,255,0.05); border-radius: 15px; margin-bottom: 8px;
+        }
+        .btn { padding: 8px 15px; border-radius: 10px; border: none; font-weight: 800; font-size: 10px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .btn-process { background: #ffbc00; color: #000; margin-right: 5px; }
+        .btn-done { background: #4caf50; color: white; margin-right: 5px; }
+        .btn-cancel { background: transparent; color: #ff4757; border: 1px solid #ff4757; padding: 7px 14px; }
+        .btn-cancel:hover { background: #ff4757; color: white; }
+        
+        .btn-add-trigger { background: #00AEEF; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; line-height: 0; }
+        .inv-btn { padding: 6px 10px; border-radius: 6px; font-size: 9px; font-weight: 900; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; }
+        .btn-avail-on { background: #4caf50; color: white; }
+        .btn-avail-off { background: transparent; color: #4caf50; border-color: #4caf50; }
+        .btn-notavail-on { background: #ff4757; color: white; }
+        .btn-notavail-off { background: transparent; color: #ff4757; border-color: #ff4757; }
+        .btn-del { background: rgba(255,255,255,0.1); color: #fff; margin-left: 5px; }
+
+        .order-id-badge { background: #00AEEF; color: black; padding: 2px 6px; border-radius: 4px; font-weight: 900; font-size: 10px; display: inline-block; margin-bottom: 5px; }
+        .status-text { font-size: 10px; font-weight: 900; text-transform: uppercase; display: block; margin-top: 4px; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 3000;
+        }
+        .modal-content { background: #1a1a1a; padding: 40px; border-radius: 30px; width: 400px; border: 1px solid rgba(255,255,255,0.1); }
+        .modal-content input, .modal-content textarea { 
+            width: 100%; padding: 12px; background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; 
+            color: white; margin-bottom: 10px; font-size: 13px;
+        }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { background: rgba(255,255,255,0.1); border: none; color: white; padding: 8px 20px; border-radius: 50px; cursor: pointer; font-size: 12px; font-weight: 700; }
+        .tab-btn.active { background: #00AEEF; }
+    </style>
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div class="login-box">
+            <img src="AlabatLogo.png" alt="Logo" style="height: 50px; margin-bottom: 20px;">
+            <h2 style="color: white; margin-bottom: 20px;">Staff Login</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="checkLogin()">Access Dashboard</button>
+            <p id="login-error" style="color: #ff4757; font-size: 11px; margin-top: 15px; display: none;">Invalid Credentials</p>
+        </div>
+    </div>
+
+    <div id="admin-content">
+        <div class="logo-wrapper">
+            <img src="AlabatLogo.png" alt="Alabat Tourism Logo" class="nav-logo">
+        </div>
+
+        <nav>
+            <div class="nav-container">
+                <span>ADMINISTRATOR PANEL</span>
+                <a class="logout-link" onclick="logout()">LOGOUT</a>
+            </div>
+        </nav>
+
+        <div class="dashboard-grid">
+            <div class="left-col">
+                <div class="sales-card">
+                    <div class="sales-info">
+                        <h3>Daily Revenue (Completed)</h3>
+                        <p id="daily-total">₱0.00</p>
+                    </div>
+                    <button class="btn-reset" onclick="resetSales()">Reset Day</button>
+                </div>
+
+                <div class="glass-panel">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="switchTab('queue')">Queue</button>
+                        <button class="tab-btn" onclick="switchTab('completed')">Completed</button>
+                        <button class="tab-btn" onclick="switchTab('cancelled')">Cancelled</button>
+                    </div>
+                    <h2 id="table-title">Live Order Queue</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order number</th>
+                                <th>Name</th>
+                                <th>Payment</th>
+                                <th>Items</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <div class="glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2>Inventory</h2>
+                        <button class="btn btn-add-trigger" onclick="toggleModal(true)">+</button>
+                    </div>
+                    <div id="inventory-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">New Product</h2>
+            <input type="text" id="newProdName" placeholder="Product Name">
+            <input type="number" id="newProdPrice" placeholder="Price (e.g. 125)">
+            <input type="text" id="newProdContent" placeholder="Content">
+            <input type="text" id="newProdImg" placeholder="Image Name">
+            <textarea id="newProdDesc" placeholder="Description..." style="width: 100%; height: 70px; background: rgba(255,255,255,0.05); border-radius: 10px; color: white; padding: 10px; border: 1px solid rgba(255,255,255,0.1);"></textarea>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn" style="flex: 1; background: #333; color: white;" onclick="toggleModal(false)">Cancel</button>
+                <button class="btn" style="flex: 2; background: #00AEEF; color: white;" onclick="addProduct()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if(user === "Alabatin" && pass === "TaraNaSaAlabat") {
+                localStorage.setItem('admin_logged_in', 'true');
+                showDashboard();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('login-overlay').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
+            loadOrders(); 
+            loadInventory();
+        }
+
+        function logout() {
+            localStorage.removeItem('admin_logged_in');
+            location.reload();
+        }
+
+        function calculateKita() {
+            const orders = JSON.parse(localStorage.getItem('alabat_orders')) || [];
+            const total = orders
+                .filter(o => o.status === 'completed')
+                .reduce((sum, order) => {
+                    const orderSum = order.items.reduce((iSum, item) => {
+                        const priceNum = parseFloat(item.price.replace(/[^\d.-]/g, '')) || 0;
+                        return iSum + (priceNum * item.quantity);
+                    }, 0);
+                    return sum + orderSum;
+                }, 0);
+            document.getElementById('daily-total').innerText = "₱" + total.toFixed(2);
+        }
+
+        function resetSales() {
+            if(confirm("Start a new business day? (Clears Completed/Cancelled)")) {
+                let orders = JSON.parse(localStorage.getItem('alabat_orders')) || [];
+                const activeOnly = orders.filter(o => o.status === 'pending' || o.status === 'processed');
+                localStorage.setItem('alabat_orders', JSON.stringify(activeOnly));
+                loadOrders();
+            }
+        }
+
+        let currentTab = 'queue';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const titles = { 'queue': 'Live Order Queue', 'completed': 'Finished Orders', 'cancelled': 'Voided Orders' };
+            document.getElementById('table-title').innerText = titles[tab];
+            loadOrders();
+        }
+
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('alabat_orders')) || [];
+            const body = document.getElementById('table-body');
+            body.innerHTML = "";
+            
+            const filtered = orders.filter(o => {
+                const s = o.status || 'pending';
+                if (currentTab === 'queue') return s === 'pending' || s === 'processed';
+                return s === currentTab;
+            });
+            
+            filtered.reverse().forEach(order => {
+                const itemsList = order.items.map(i => `${i.name} (x${i.quantity})`).join(', ');
+                const status = order.status || 'pending';
+                
+                const paymentDisplay = order.paymentMode === 'Online' 
+                    ? `Online:${order.transactionNo || 'N/A'}`
+                    : `In-Person`;
+
+                let actionHtml = '';
+                if (currentTab === 'queue') {
+                    if (status === 'pending') {
+                        actionHtml = `<button class="btn btn-process" onclick="setStatus('${order.orderID}', 'processed')">Process</button>`;
+                    } else if (status === 'processed') {
+                        actionHtml = `<button class="btn btn-done" onclick="setStatus('${order.orderID}', 'completed')">Done</button>`;
+                    }
+                    actionHtml += `<button class="btn btn-cancel" onclick="setStatus('${order.orderID}', 'cancelled')">Cancel</button>`;
+                } else if (currentTab === 'completed') {
+                    actionHtml = `<span style="color:#4caf50; font-weight:900;">DONE</span>`;
+                } else {
+                    actionHtml = `<span style="color:#ff4757; font-weight:900;">VOID</span>`;
+                }
+
+                body.innerHTML += `
+                    <tr>
+                        <td><span class="order-id-badge">#${order.orderID}</span></td>
+                        <td><b>${order.recipient}</b></td>
+                        <td>${paymentDisplay}</td>
+                        <td>${itemsList}</td>
+                        <td>${actionHtml}</td>
+                    </tr>`;
+            });
+            calculateKita();
+        }
+
+        function setStatus(id, status) {
+            let orders = JSON.parse(localStorage.getItem('alabat_orders')) || [];
+            const idx = orders.findIndex(o => o.orderID == id);
+            if(idx !== -1) {
+                orders[idx].status = status;
+                localStorage.setItem('alabat_orders', JSON.stringify(orders));
+                loadOrders();
+            }
+        }
+
+        function formatPrice(value) {
+            let num = parseFloat(value);
+            return isNaN(num) ? "₱0.00" : "₱" + num.toFixed(2);
+        }
+
+        function loadInventory() {
+            const inventory = JSON.parse(localStorage.getItem('alabat_inventory')) || [];
+            const container = document.getElementById('inventory-list');
+            container.innerHTML = "";
+            inventory.forEach((p, index) => {
+                const isAvail = p.available !== false;
+                container.innerHTML += `
+                    <div class="inventory-item">
+                        <div>
+                            <div style="font-weight:700;">${p.name}</div>
+                            <div style="font-size:10px; opacity:0.5;">${p.price}</div>
+                        </div>
+                        <div>
+                            <button class="inv-btn ${isAvail ? 'btn-avail-on' : 'btn-avail-off'}" onclick="setAvailability(${index}, true)">ON</button>
+                            <button class="inv-btn ${!isAvail ? 'btn-notavail-on' : 'btn-notavail-off'}" onclick="setAvailability(${index}, false)">OFF</button>
+                            <button class="btn btn-del" onclick="deleteProduct(${index})">✕</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function addProduct() {
+            const name = document.getElementById('newProdName').value;
+            const rawPrice = document.getElementById('newProdPrice').value;
+            if(!name || !rawPrice) return alert("Missing Info");
+            
+            let inventory = JSON.parse(localStorage.getItem('alabat_inventory')) || [];
+            inventory.push({ 
+                name, 
+                price: formatPrice(rawPrice), 
+                content: document.getElementById('newProdContent').value,
+                img: document.getElementById('newProdImg').value,
+                desc: document.getElementById('newProdDesc').value,
+                available: true 
+            });
+            localStorage.setItem('alabat_inventory', JSON.stringify(inventory));
+            toggleModal(false);
+            loadInventory();
+        }
+
+        function setAvailability(index, status) {
+            let inventory = JSON.parse(localStorage.getItem('alabat_inventory'));
+            inventory[index].available = status;
+            localStorage.setItem('alabat_inventory', JSON.stringify(inventory));
+            loadInventory();
+        }
+
+        function deleteProduct(index) {
+            if(confirm("Delete product?")) {
+                let inventory = JSON.parse(localStorage.getItem('alabat_inventory'));
+                inventory.splice(index, 1);
+                localStorage.setItem('alabat_inventory', JSON.stringify(inventory));
+                loadInventory();
+            }
+        }
+
+        function toggleModal(show) { document.getElementById('productModal').style.display = show ? 'flex' : 'none'; }
+
+        window.onload = () => {
+            if(localStorage.getItem('admin_logged_in') === 'true') {
+                showDashboard();
+            }
+        };
+    </script>
+</body>
+</html>

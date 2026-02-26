@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tara na sa Alabat! | Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('background.jpg') no-repeat center center fixed; 
+            background-size: cover; color: white; height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center;
+            position: relative;
+        }
+
+        /* --- LOGO ANIMATION --- */
+        @keyframes slideUpLogo {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .top-left-logo {
+            position: absolute; top: 30px; left: 30px; width: 150px; 
+            z-index: 2000; animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .logo-wrapper {
+            display: flex; justify-content: center; padding-top: 30px; width: 100%;
+            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .nav-logo { height: 70px; width: auto; display: block; }
+
+        /* --- NAVIGATION --- */
+        nav { display: flex; justify-content: center; padding: 20px; z-index: 1000; width: 100%; }
+        .nav-container {
+            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            padding: 5px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; gap: 5px;
+        }
+        .nav-container a {
+            position: relative; z-index: 2; color: white; text-decoration: none;
+            font-weight: 700; font-size: 11px; text-transform: uppercase;
+            padding: 10px 20px; transition: 0.3s; opacity: 0.7;
+        }
+        .nav-container a.active { opacity: 1; }
+        .nav-slider {
+            position: absolute; height: calc(100% - 10px); width: 80px;
+            background: rgba(255, 255, 255, 0.2); border-radius: 50px;
+            top: 5px; left: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* --- MAIN SIDE-BY-SIDE LAYOUT --- */
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 1400px;
+            flex: 1; /* Takes up remaining height */
+            gap: 50px;
+            padding-bottom: 50px;
+        }
+
+        /* LEFT SIDE: TEXT */
+        .content { 
+            flex: 1;
+            animation: slideUpLogo 1s ease 0.3s forwards; opacity: 0;
+        }
+        .main-title { font-size: clamp(40px, 6vw, 90px); font-weight: 900; line-height: 0.85; text-transform: uppercase; letter-spacing: -3px; }
+        .sub-title { font-size: 20px; margin: 15px 0 30px; font-weight: 400; opacity: 0.9; }
+        .btn-explore { background: #00AEEF; color: white; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 900; font-size: 14px; text-transform: uppercase; transition: 0.3s; display: inline-block; }
+        .btn-explore:hover { background: white; color: black; transform: scale(1.05); }
+
+        /* RIGHT SIDE: MEDIA GROUP (Video on top, Cards below) */
+        .media-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: slideUpLogo 1s ease 0.5s forwards; opacity: 0;
+        }
+
+        .video-box { 
+            width: 520px; /* Reduced slightly to fit better horizontally */
+            position: relative; border-radius: 25px; 
+            border: 4px solid white; overflow: hidden; background: #000;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .video-label { position: absolute; top: 15px; left: 15px; z-index: 10; font-weight: 800; font-size: 10px; text-transform: uppercase; opacity: 0.8; letter-spacing: 1px; }
+        video { width: 100%; aspect-ratio: 16/9; display: block; object-fit: cover; }
+
+        .preview-row { display: flex; gap: 15px; }
+        .preview-card {
+            width: 252.5px; /* (520px - 15px gap) / 2 */
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); 
+            border-radius: 25px; padding: 15px; border: 1px solid rgba(255, 255, 255, 0.2);
+            text-decoration: none; color: white; transition: 0.3s;
+        }
+        .preview-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15); border-color: #00AEEF; }
+        .preview-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; margin: 8px 0; }
+        .preview-card h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; }
+        .preview-card .label { font-size: 9px; font-weight: 700; opacity: 0.6; letter-spacing: 1px; }
+
+        @media (max-width: 1024px) {
+            .hero-container { flex-direction: column; text-align: center; justify-content: center; overflow-y: auto; }
+            .media-group { align-items: center; }
+            .video-box, .preview-card { width: 100%; max-width: 450px; }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="ariya.jpg" alt="Ariya Brand Logo" class="top-left-logo">
+
+    <div class="logo-wrapper">
+        <a href="index.html">
+            <img src="AlabatLogo.png" alt="Alabat Tourism Logo" class="nav-logo">
+        </a>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-slider" id="navSlider"></div>
+            <a href="index.html" class="active" id="activeLink">HOME</a>
+            <a href="about.html">ABOUT</a>
+            <a href="destinations.html">DESTINATIONS</a>
+            <a href="products.html">PRODUCTS</a>
+            <a href="contact.html">CONTACT</a>
+        </div>
+    </nav>
+
+    <div class="hero-container">
+        <div class="content">
+            <h1 class="main-title">TARA NA SA<br>ALABAT!</h1>
+            <p class="sub-title">The hidden gem of Quezon!</p>
+            <a href="about.html" class="btn-explore">EXPLORE NOW &rarr;</a>
+        </div>
+
+        <div class="media-group">
+            <div class="video-box">
+                <div class="video-label">CULTURE OF ALABAT</div>
+                <video autoplay muted loop playsinline>
+                    <source src="IMG_1272.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="preview-row">
+                <a href="destinations.html" class="preview-card">
+                    <p class="label">DESTINATIONS</p>
+                    <img src="pulongbato.jpg" alt="Pulong Bato">
+                    <h3>Pulong Bato</h3>
+                    <p style="font-size: 10px; opacity: 0.8;">Explore our sights</p>
+                </a>
+
+                <a href="products.html" class="preview-card">
+                    <p class="label">LOCAL PRODUCTS</p>
+                    <img src="coco-sugar.jpg" alt="Coco Sugar">
+                    <h3>Coco Sugar</h3>
+                    <p style="font-size: 10px; opacity: 0.8;">Organic & Healthy</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateNavSlider() {
+            const activeLink = document.getElementById('activeLink');
+            const slider = document.getElementById('navSlider');
+            if (activeLink && slider) {
+                slider.style.width = activeLink.offsetWidth + "px";
+                slider.style.left = activeLink.offsetLeft + "px";
+            }
+        }
+        window.addEventListener('load', updateNavSlider);
+        window.addEventListener('resize', updateNavSlider);
+    </script>
+</body>
+</html>

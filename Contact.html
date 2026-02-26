@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Alabat Tourism</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('background.jpg') no-repeat center center fixed; 
+            background-size: cover; color: white; min-height: 100vh; overflow-y: auto;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* --- LOGO ANIMATIONS --- */
+        @keyframes slideUpLogo {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .top-left-logo {
+            position: absolute; top: 30px; left: 30px; width: 140px; 
+            z-index: 2000; animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .logo-wrapper { 
+            display: flex; justify-content: center; padding-top: 40px; width: 100%; 
+            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        .nav-logo { height: 120px; width: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); }
+
+        /* --- NAVIGATION --- */
+        nav { display: flex; justify-content: center; padding: 20px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { 
+            position: relative; background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(15px); padding: 5px; border-radius: 50px; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+        }
+        
+        /* Your Requested CSS */
+        .nav-container a.active { opacity: 1; }
+        .nav-slider {
+            position: absolute; height: calc(100% - 10px); width: 80px;
+            background: rgba(255, 255, 255, 0.2); border-radius: 50px;
+            top: 5px; left: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .nav-links { display: flex; list-style: none; position: relative; z-index: 2; }
+        .nav-links a { 
+            color: white; text-decoration: none; font-size: 11px; font-weight: 700; 
+            text-transform: uppercase; padding: 10px 20px; display: inline-block; 
+            transition: 0.3s; opacity: 0.6;
+        }
+
+        /* --- CONTENT --- */
+        .contact-content { text-align: center; max-width: 800px; padding: 40px 20px; }
+        .contact-text { font-size: 18px; font-weight: 700; line-height: 1.8; text-transform: uppercase; margin-bottom: 40px; }
+        .contact-text a { color: #00AEEF; text-decoration: none; }
+        .map-container { width: 100%; max-width: 600px; height: 350px; border: 5px solid white; border-radius: 40px; overflow: hidden; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <img src="ariya.jpg" alt="Ariya Logo" class="top-left-logo">
+
+    <div class="logo-wrapper">
+        <img src="AlabatLogo.png" alt="Alabat Tourism" class="nav-logo">
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-slider" id="navShade"></div>
+            <ul class="nav-links">
+                <li><a href="index.html" onclick="setActive(this, event)">HOME</a></li>
+                <li><a href="about.html" onclick="setActive(this, event)">ABOUT</a></li>
+                <li><a href="destinations.html" onclick="setActive(this, event)">DESTINATIONS</a></li>
+                <li><a href="products.html" onclick="setActive(this, event)">PRODUCTS</a></li>
+                <li><a href="contact.html" id="activeLink" class="active" onclick="setActive(this, event)">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="contact-content">
+        <p class="contact-text">
+            ALABAT TOURIST INFORMATION CENTER, ALABAT QUEZON.<br>
+            CONTACT NUMBER: <a href="tel:00078263117">0007-826-3117</a><br>
+            EMAIL: <a href="mailto:alabattourismoffice@gmail.com">alabattourismoffice@gmail.com</a>
+        </p>
+
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15467.435738814782!2d122.0003!3d14.1023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a1e36789456789%3A0x123456789!2sAlabat%2C%20Quezon!5e0!3m2!1sen!2sph!4v1700000000000"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const shade = document.getElementById('navShade');
+        let currentActive = document.getElementById('activeLink');
+
+        function moveShade(el) {
+            shade.style.width = el.offsetWidth + 'px';
+            shade.style.left = el.offsetLeft + 'px';
+        }
+
+        function setActive(el, e) {
+            // Remove active class from previous
+            currentActive.classList.remove('active');
+            
+            // Set new active
+            el.classList.add('active');
+            currentActive = el;
+            
+            // Move slider
+            moveShade(el);
+
+            // If you want the link to actually navigate, remove 'e.preventDefault()'
+            // For now, I'm letting it navigate normally to your other files.
+        }
+
+        // Initial position on load
+        window.addEventListener('load', () => moveShade(currentActive));
+    </script>
+</body>
+</html>

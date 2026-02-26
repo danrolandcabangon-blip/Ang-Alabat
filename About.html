@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Alabat Tourism</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('background.jpg') no-repeat center center fixed; 
+            background-size: cover; color: white; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            position: relative; overflow-x: hidden;
+        }
+
+        /* --- LOGO ANIMATION --- */
+        @keyframes slideUpLogo {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .top-left-logo {
+            position: absolute; top: 30px; left: 30px; width: 150px; 
+            z-index: 2000; animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .logo-wrapper {
+            display: flex; justify-content: center; padding-top: 30px; width: 100%;
+            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .nav-logo { height: 70px; width: auto; display: block; }
+
+        /* --- NAVIGATION --- */
+        nav { display: flex; justify-content: center; padding: 20px; position: sticky; top: 0; z-index: 1000; width: 100%; }
+        .nav-container {
+            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            padding: 5px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; gap: 5px;
+        }
+        .nav-container a {
+            position: relative; z-index: 2; color: white; text-decoration: none;
+            font-weight: 700; font-size: 11px; text-transform: uppercase;
+            padding: 10px 20px; transition: 0.3s; opacity: 0.7;
+        }
+        .nav-container a.active { opacity: 1; }
+        .nav-slider {
+            position: absolute; height: calc(100% - 10px); width: 80px;
+            background: rgba(255, 255, 255, 0.2); border-radius: 50px;
+            top: 5px; left: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .hero-title {
+            font-size: clamp(60px, 10vw, 120px); font-weight: 900; text-transform: uppercase;
+            letter-spacing: -5px; margin-top: 20px; line-height: 0.8;
+            animation: slideUpLogo 1s ease 0.2s forwards; opacity: 0;
+        }
+        .hero-sub {
+            font-size: 20px; font-weight: 700; color: #00AEEF; margin-bottom: 10px;
+            animation: slideUpLogo 1s ease 0.4s forwards; opacity: 0;
+        }
+
+        /* --- CLEAN HORIZONTAL SLIDER (No Frames) --- */
+        .slider-container { 
+            padding: 20px 0 40px; width: 100%; position: relative; 
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); 
+            mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); 
+        }
+        .slider-wrapper { 
+            display: flex; flex-direction: row; gap: 20px; overflow-x: auto; 
+            scroll-behavior: smooth; padding: 20px 8%; scrollbar-width: none; 
+        }
+        .slider-wrapper::-webkit-scrollbar { display: none; }
+
+        .about-photo { 
+            flex: 0 0 400px; height: 300px; object-fit: cover; border-radius: 25px; 
+            cursor: pointer; transition: 0.4s ease; 
+            animation: slideUpLogo 1s ease 0.6s forwards; opacity: 0;
+        }
+        .about-photo:hover { transform: scale(1.05); filter: brightness(1.2); }
+
+        /* --- ZOOM MODAL WITH DETAILS --- */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 5000; backdrop-filter: blur(15px);
+        }
+        .modal.active { display: flex; }
+        
+        .modal-content { 
+            max-width: 80%; max-height: 70%; border-radius: 20px; 
+            animation: zoomInEffect 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .modal-details {
+            margin-top: 20px; text-align: center; max-width: 600px;
+            animation: slideUpLogo 0.5s ease forwards;
+        }
+        .modal-details h3 { font-size: 24px; color: #00AEEF; text-transform: uppercase; margin-bottom: 5px; }
+        .modal-details p { font-size: 14px; opacity: 0.8; line-height: 1.5; }
+
+        @keyframes zoomInEffect {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- TEXT CONTENT --- */
+        .content-card {
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px);
+            width: 90%; max-width: 900px; border-radius: 30px; padding: 60px;
+            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 100px; line-height: 1.8;
+            animation: slideUpLogo 1s ease 0.8s forwards; opacity: 0;
+        }
+        h2 { font-size: 40px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; color: #00AEEF; }
+
+        @media (max-width: 768px) {
+            .about-photo { flex: 0 0 300px; height: 220px; }
+            .content-card { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="ariya.jpg" alt="Ariya Brand Logo" class="top-left-logo">
+
+    <div class="logo-wrapper">
+        <a href="index.html">
+            <img src="AlabatLogo.png" alt="Alabat Tourism Logo" class="nav-logo">
+        </a>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-slider" id="navSlider"></div>
+            <a href="index.html">HOME</a>
+            <a href="about.html" class="active" id="activeLink">ABOUT</a>
+            <a href="destinations.html">DESTINATIONS</a>
+            <a href="products.html">PRODUCTS</a>
+            <a href="contact.html">CONTACT</a>
+        </div>
+    </nav>
+
+    <h1 class="hero-title">ALABAT</h1>
+    <p class="hero-sub">QUEZON, PHILIPPINES</p>
+
+    <div class="slider-container">
+        <div class="slider-wrapper">
+            <img src="farmersbg.png" class="about-photo" onclick="openZoom(this, 'Farmers of Alabat', 'The hardworking local farmers processing organic goods.')">
+            <img src="PulongBatoo.png" class="about-photo" onclick="openZoom(this, 'Pulong Bato', 'A natural rock formation and crystal clear waters of Villa Norte.')">
+            <img src="tumiispeak.jpg" class="about-photo" onclick="openZoom(this, 'Tumii Peak', 'The highest point in Alabat offering a 360-degree view of the island.')">
+            <img src="alabatcove.jpg" class="about-photo" onclick="openZoom(this, 'Alabat Cove', 'A serene coastal area perfect for witnessing the sunset.')">
+            <img src="background.jpg" class="about-photo" onclick="openZoom(this, 'Island Overview', 'A bird\'s eye view of the lush greenery and blue waters.')">
+        </div>
+    </div>
+
+    <div class="modal" id="zoomModal" onclick="closeZoom()">
+        <img class="modal-content" id="modalImg">
+        <div class="modal-details">
+            <h3 id="modalTitle"></h3>
+            <p id="modalDesc"></p>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <h2>History of Alabat</h2>
+        <p>Alabat, officially the <strong>Municipality of Alabat</strong> (Tagalog: Bayan ng Alabat), is a municipality in the province of Quezon, Philippines. According to the 2024 census, it has a population of 15,744 people.</p>
+        <p>The town is home to a few speakers of the critically endangered <strong>Inagta Alabat language</strong>, one of the most endangered languages in the world as listed by UNESCO.</p>  
+
+        <div class="highlight-box">
+            Founded in the year 1882 by a Spanish priest from Gumaca, the town originally built an ermita that honours Our Lady of Monte Carmelo.
+        </div>
+        <p>Its first name was <strong>Gordo</strong>, which means "fat", due to the island's shape. It was changed to Gordon, Barcelona, and later on Alabat. The formal establishment of the town occurred in the year 1900.</p>
+        <h2>Etymology</h2>
+        <p>Before Spanish colonization, the mountains were already inhabited by the “Baluga” (aborigines). Nomadic by nature, they would clean patches of land, plant rice and vegetables and hunt.</p>
+        <p>Local folklore says that a Spanish priest from the mainland saw the Island from across Lamon Bay. He crossed the bay on a boat and founded a church at what is today barangay Gordon.</p>
+
+        <p>The name Alabat came from the word <strong>Alâbât</strong> (local Tagalog word for balustrade or balcony).</p>
+
+        <p>Another local folklore says that the name 'Alabat' was from Muslim origins where Alabat comes from Allah-bat, and if the word is mixed up actually means <strong>Bathala</strong>, the local word for god.</p>
+    </div>
+
+    <script>
+        function updateNavSlider() {
+            const activeLink = document.getElementById('activeLink');
+            const slider = document.getElementById('navSlider');
+            if (activeLink && slider) {
+                slider.style.width = activeLink.offsetWidth + "px";
+                slider.style.left = activeLink.offsetLeft + "px";
+            }
+        }
+        window.addEventListener('load', updateNavSlider);
+        window.addEventListener('resize', updateNavSlider);
+
+        // Enhanced Zoom Logic with Details
+        const modal = document.getElementById('zoomModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+
+        function openZoom(imgElement, title, description) {
+            modal.classList.add('active');
+            modalImg.src = imgElement.src;
+            modalTitle.innerText = title;
+            modalDesc.innerText = description;
+        }
+
+        function closeZoom() {
+            modal.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
