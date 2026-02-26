@@ -10,105 +10,122 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
         body {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                         url('background.jpg') no-repeat center center fixed; 
-            background-size: cover; color: white; height: 100vh; overflow: hidden;
+            background-size: cover; color: white; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            position: relative;
+            position: relative; overflow-x: hidden;
         }
 
-        /* --- LOGO ANIMATION --- */
-        @keyframes slideUpLogo {
-            from { transform: translateY(50px); opacity: 0; }
+        /* --- ANIMATIONS --- */
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* --- LOGO --- */
         .top-left-logo {
-            position: absolute; top: 30px; left: 30px; width: 150px; 
-            z-index: 2000; animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            position: absolute; top: 20px; left: 20px; width: 100px; 
+            z-index: 2000; animation: slideUp 1s ease forwards;
         }
 
         .logo-wrapper {
-            display: flex; justify-content: center; padding-top: 30px; width: 100%;
-            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            display: flex; justify-content: center; padding-top: 40px; width: 100%;
+            animation: slideUp 1s ease forwards;
         }
+        .nav-logo { height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(0,174,239,0.3)); }
 
-        .nav-logo { height: 70px; width: auto; display: block; }
-
-        /* --- NAVIGATION --- */
-        nav { display: flex; justify-content: center; padding: 20px; z-index: 1000; width: 100%; }
+        /* --- NAVIGATION (Mobile Friendly) --- */
+        nav { 
+            display: flex; justify-content: center; padding: 15px; 
+            z-index: 1000; width: 100%; position: sticky; top: 0;
+        }
         .nav-container {
-            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
             padding: 5px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex; align-items: center; gap: 5px;
+            display: flex; align-items: center; gap: 2px;
+            max-width: 95vw; overflow-x: auto; scrollbar-width: none; /* Hide scrollbar */
         }
+        .nav-container::-webkit-scrollbar { display: none; }
+
         .nav-container a {
             position: relative; z-index: 2; color: white; text-decoration: none;
-            font-weight: 700; font-size: 11px; text-transform: uppercase;
-            padding: 10px 20px; transition: 0.3s; opacity: 0.7;
+            font-weight: 700; font-size: 10px; text-transform: uppercase;
+            padding: 10px 18px; transition: 0.3s; opacity: 0.6; white-space: nowrap;
         }
         .nav-container a.active { opacity: 1; }
+        
         .nav-slider {
-            position: absolute; height: calc(100% - 10px); width: 80px;
-            background: rgba(255, 255, 255, 0.2); border-radius: 50px;
-            top: 5px; left: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: absolute; height: calc(100% - 10px);
+            background: rgba(0, 174, 239, 0.5); border-radius: 50px;
+            top: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* --- MAIN SIDE-BY-SIDE LAYOUT --- */
+        /* --- HERO SECTION --- */
         .hero-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 90%;
-            max-width: 1400px;
-            flex: 1; /* Takes up remaining height */
-            gap: 50px;
-            padding-bottom: 50px;
+            display: flex; flex-direction: column; align-items: center;
+            width: 90%; max-width: 1200px; flex: 1; gap: 40px;
+            padding: 40px 0; text-align: center;
+            animation: slideUp 1s ease 0.2s forwards; opacity: 0;
         }
 
-        /* LEFT SIDE: TEXT */
-        .content { 
-            flex: 1;
-            animation: slideUpLogo 1s ease 0.3s forwards; opacity: 0;
+        @media (min-width: 1024px) {
+            .hero-container { flex-direction: row; text-align: left; gap: 80px; }
+            .top-left-logo { width: 150px; top: 30px; left: 30px; }
         }
-        .main-title { font-size: clamp(40px, 6vw, 90px); font-weight: 900; line-height: 0.85; text-transform: uppercase; letter-spacing: -3px; }
-        .sub-title { font-size: 20px; margin: 15px 0 30px; font-weight: 400; opacity: 0.9; }
-        .btn-explore { background: #00AEEF; color: white; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 900; font-size: 14px; text-transform: uppercase; transition: 0.3s; display: inline-block; }
-        .btn-explore:hover { background: white; color: black; transform: scale(1.05); }
 
-        /* RIGHT SIDE: MEDIA GROUP (Video on top, Cards below) */
+        /* --- TEXT CONTENT --- */
+        .content { flex: 1; }
+        .main-title { 
+            font-size: clamp(45px, 10vw, 90px); 
+            font-weight: 900; line-height: 0.9; 
+            text-transform: uppercase; letter-spacing: -2px; 
+        }
+        .sub-title { font-size: 18px; margin: 15px 0 30px; font-weight: 400; opacity: 0.8; }
+        
+        .btn-explore { 
+            background: #00AEEF; color: white; padding: 16px 35px; 
+            border-radius: 50px; text-decoration: none; font-weight: 900; 
+            font-size: 13px; text-transform: uppercase; transition: 0.3s; 
+            display: inline-block; box-shadow: 0 10px 20px rgba(0,174,239,0.3);
+        }
+
+        /* --- MEDIA GROUP --- */
         .media-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            animation: slideUpLogo 1s ease 0.5s forwards; opacity: 0;
+            display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 550px;
         }
 
         .video-box { 
-            width: 520px; /* Reduced slightly to fit better horizontally */
-            position: relative; border-radius: 25px; 
-            border: 4px solid white; overflow: hidden; background: #000;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            width: 100%; position: relative; border-radius: 25px; 
+            border: 3px solid rgba(255,255,255,0.8); overflow: hidden; 
+            background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-        .video-label { position: absolute; top: 15px; left: 15px; z-index: 10; font-weight: 800; font-size: 10px; text-transform: uppercase; opacity: 0.8; letter-spacing: 1px; }
+        .video-label { 
+            position: absolute; top: 15px; left: 15px; z-index: 10; 
+            font-weight: 900; font-size: 9px; text-transform: uppercase; 
+            background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;
+            backdrop-filter: blur(5px);
+        }
         video { width: 100%; aspect-ratio: 16/9; display: block; object-fit: cover; }
 
-        .preview-row { display: flex; gap: 15px; }
+        .preview-row { display: flex; gap: 15px; width: 100%; }
+        
         .preview-card {
-            width: 252.5px; /* (520px - 15px gap) / 2 */
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); 
-            border-radius: 25px; padding: 15px; border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); 
+            border-radius: 25px; padding: 15px; border: 1px solid rgba(255, 255, 255, 0.1);
             text-decoration: none; color: white; transition: 0.3s;
         }
-        .preview-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15); border-color: #00AEEF; }
-        .preview-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; margin: 8px 0; }
-        .preview-card h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; }
-        .preview-card .label { font-size: 9px; font-weight: 700; opacity: 0.6; letter-spacing: 1px; }
+        .preview-card img { 
+            width: 100%; height: 100px; object-fit: cover; 
+            border-radius: 15px; margin: 10px 0; 
+        }
+        .preview-card h3 { font-size: 14px; font-weight: 800; text-transform: uppercase; }
+        .preview-card .label { font-size: 8px; font-weight: 700; opacity: 0.5; letter-spacing: 1px; }
 
-        @media (max-width: 1024px) {
-            .hero-container { flex-direction: column; text-align: center; justify-content: center; overflow-y: auto; }
-            .media-group { align-items: center; }
-            .video-box, .preview-card { width: 100%; max-width: 450px; }
+        @media (max-width: 480px) {
+            .preview-row { flex-direction: column; }
+            .main-title { font-size: 50px; }
+            .nav-container a { padding: 10px 12px; font-size: 9px; }
         }
     </style>
 </head>
@@ -153,14 +170,12 @@
                     <p class="label">DESTINATIONS</p>
                     <img src="pulongbato.jpg" alt="Pulong Bato">
                     <h3>Pulong Bato</h3>
-                    <p style="font-size: 10px; opacity: 0.8;">Explore our sights</p>
                 </a>
 
                 <a href="products.html" class="preview-card">
                     <p class="label">LOCAL PRODUCTS</p>
                     <img src="coco-sugar.jpg" alt="Coco Sugar">
                     <h3>Coco Sugar</h3>
-                    <p style="font-size: 10px; opacity: 0.8;">Organic & Healthy</p>
                 </a>
             </div>
         </div>
@@ -180,3 +195,4 @@
     </script>
 </body>
 </html>
+
