@@ -99,8 +99,8 @@
             width: 100%; position: relative; border-radius: 25px; 
             border: 3px solid rgba(255,255,255,0.8); overflow: hidden; 
             background: #000; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            /* Important for YouTube Aspect Ratio */
             aspect-ratio: 16 / 9;
+            cursor: pointer;
         }
         
         .video-box iframe {
@@ -165,10 +165,11 @@
         </div>
 
         <div class="media-group">
-            <div class="video-box">
+            <div class="video-box" onclick="changeVideo()">
                 <div class="video-label">ISLAND PREVIEW</div>
                 <iframe 
-                    src="https://www.youtube.com/embed/pSD9s5_IVJk?autoplay=1&mute=1&loop=1&playlist=pSD9s5_IVJk" 
+                    id="heroVideo"
+                    src="https://www.youtube.com/embed/pSD9s5_IVJk?autoplay=1&mute=0&loop=1&playlist=pSD9s5_IVJk" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
                 </iframe>
@@ -191,6 +192,7 @@
     </div>
 
     <script>
+        // --- NAVIGATION SLIDER ---
         function updateNavSlider() {
             const activeLink = document.getElementById('activeLink');
             const slider = document.getElementById('navSlider');
@@ -201,7 +203,19 @@
         }
         window.addEventListener('load', updateNavSlider);
         window.addEventListener('resize', updateNavSlider);
+
+        // --- YOUTUBE VIDEO TOGGLE ---
+        const heroVideo = document.getElementById('heroVideo');
+        // Added the new video ID "TdZzwAT-FFw" to the list
+        const playlist = ["pSD9s5_IVJk", "TdZzwAT-FFw"];
+        let vIdx = 0;
+
+        function changeVideo() {
+            vIdx = (vIdx + 1) % playlist.length;
+            const newId = playlist[vIdx];
+            // Mute=0 ensures it plays with sound when clicked
+            heroVideo.src = `https://www.youtube.com/embed/${newId}?autoplay=1&mute=0&loop=1&playlist=${newId}`;
+        }
     </script>
 </body>
 </html>
-
