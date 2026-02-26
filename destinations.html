@@ -78,9 +78,28 @@
         @media (min-width: 1024px) { .book-now-btn { align-self: flex-start; } }
 
         .video-wrapper { width: 100%; max-width: 650px; position: relative; }
-        .video-frame { position: relative; width: 100%; border-radius: 25px; border: 3px solid white; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); background: #000; }
-        .video-label { position: absolute; top: 15px; left: 15px; z-index: 10; font-weight: 800; font-size: 10px; text-transform: uppercase; opacity: 0.6; }
-        video { width: 100%; aspect-ratio: 16/9; display: block; object-fit: cover; }
+        .video-frame { 
+            position: relative; 
+            width: 100%; 
+            border-radius: 25px; 
+            border: 3px solid white; 
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+            background: #000;
+            aspect-ratio: 16/9; /* Ensures the iframe fits perfectly */
+            cursor: pointer;
+        }
+        .video-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-label { 
+            position: absolute; top: 15px; left: 15px; z-index: 10; 
+            font-weight: 800; font-size: 10px; text-transform: uppercase; 
+            background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 4px;
+            pointer-events: none;
+        }
 
         /* --- SLIDER --- */
         .slider-container { 
@@ -138,11 +157,11 @@
         <div class="nav-container">
             <div class="nav-slider" id="navShade"></div>
             <ul class="nav-links">
-                <li><a href="index.html" onclick="setActive(this, event)">HOME</a></li>
-                <li><a href="about.html" onclick="setActive(this, event)">ABOUT</a></li>
-                <li><a href="destinations.html" id="activeLink" class="active" onclick="setActive(this, event)">DESTINATIONS</a></li>
-                <li><a href="products.html" onclick="setActive(this, event)">PRODUCTS</a></li>
-                <li><a href="contact.html" onclick="setActive(this, event)">CONTACT</a></li>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="destinations.html" id="activeLink" class="active">DESTINATIONS</a></li>
+                <li><a href="products.html">PRODUCTS</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
             </ul>
         </div>
     </nav>
@@ -164,12 +183,14 @@
             <a href="contact.html" class="book-now-btn">BOOK NOW</a>
         </div>
         <div class="video-wrapper">
-            <div class="video-frame">
-                <div class="video-label" id="videoTitle">NIYOGYUGAN FESTIVAL</div>
-                <video id="videoPlayer" autoplay muted loop playsinline onclick="changeVideo()">
-                    <source src="IMG_1272.mp4" type="video/mp4">
-                </video>
+            <div class="video-frame" onclick="changeVideo()">
+                <div class="video-label" id="videoTitle">PULONG BATO TOUR</div>
+                <iframe id="videoPlayer" 
+                        src="https://www.youtube.com/embed/J_i3Oupb4R4?autoplay=1&mute=1&loop=1&playlist=J_i3Oupb4R4" 
+                        allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
             </div>
+            <p style="font-size: 10px; margin-top: 10px; opacity: 0.5; text-align: center;">Tip: Click the frame to switch videos</p>
         </div>
     </div>
 
@@ -178,6 +199,7 @@
     </div>
 
     <script>
+        // --- NAVIGATION SLIDER ---
         const shade = document.getElementById('navShade');
         let currentActive = document.getElementById('activeLink');
 
@@ -186,31 +208,29 @@
             shade.style.left = `${element.offsetLeft}px`;
         }
 
-        function setActive(el, e) {
-            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-            el.classList.add('active');
-            currentActive = el;
-            moveShade(el);
-        }
-
         window.onload = () => moveShade(currentActive);
         window.onresize = () => moveShade(currentActive);
 
-        const video = document.getElementById('videoPlayer');
+        // --- YOUTUBE VIDEO TOGGLE ---
+        const videoFrame = document.getElementById('videoPlayer');
         const videoTitle = document.getElementById('videoTitle');
+        
+        // Using the YouTube IDs from your links
         const myVideos = [
-            { title: "NIYOGYUGAN FESTIVAL", url: "IMG_1272.mp4" },
-            { title: "ALABAT ISLAND DRONE", url: "kevin.mp4" },
+            { title: "PULONG BATO TOUR", id: "J_i3Oupb4R4" },
+            { title: "ALABAT ISLAND EXPERIENCE", id: "VEgYSAwmH4c" }
         ];
         let vIdx = 0;
 
         function changeVideo() {
             vIdx = (vIdx + 1) % myVideos.length;
-            video.src = myVideos[vIdx].url;
+            const newId = myVideos[vIdx].id;
+            // Update iframe src with autoplay and loop enabled
+            videoFrame.src = `https://www.youtube.com/embed/${newId}?autoplay=1&mute=1&loop=1&playlist=${newId}`;
             videoTitle.innerText = myVideos[vIdx].title;
-            video.play();
         }
 
+        // --- DESTINATIONS LIST ---
         const myDestinations = [
             { name: "Pulong Bato", img: "pulongbato.jpg", short: "Iconic white rock formation.", long: "Pulong Bato is one of Alabat's most famous natural landmarks, featuring a stunning white stone structure surrounded by crystal clear waters." },
             { name: "Alabat Cove", img: "alabatcove.jpg", short: "Golden sunsets and calm seas.", long: "A serene escape offering breathtaking golden sunsets. The calm waters make it an ideal spot for peaceful afternoons." },
