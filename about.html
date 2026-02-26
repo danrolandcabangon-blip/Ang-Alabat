@@ -17,111 +17,116 @@
             position: relative; overflow-x: hidden;
         }
 
-        /* --- LOGO ANIMATION --- */
-        @keyframes slideUpLogo {
-            from { transform: translateY(50px); opacity: 0; }
+        /* --- ANIMATIONS --- */
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* --- LOGO --- */
         .top-left-logo {
-            position: absolute; top: 30px; left: 30px; width: 150px; 
-            z-index: 2000; animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            position: absolute; top: 20px; left: 20px; width: 100px; 
+            z-index: 2000; animation: slideUp 1s ease forwards;
         }
 
         .logo-wrapper {
-            display: flex; justify-content: center; padding-top: 30px; width: 100%;
-            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            display: flex; justify-content: center; padding-top: 40px; width: 100%;
+            animation: slideUp 1s ease forwards;
         }
-
-        .nav-logo { height: 70px; width: auto; display: block; }
+        .nav-logo { height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(0,174,239,0.3)); }
 
         /* --- NAVIGATION --- */
-        nav { display: flex; justify-content: center; padding: 20px; position: sticky; top: 0; z-index: 1000; width: 100%; }
+        nav { display: flex; justify-content: center; padding: 15px; position: sticky; top: 0; z-index: 1000; width: 100%; }
         .nav-container {
-            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
             padding: 5px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex; align-items: center; gap: 5px;
+            display: flex; align-items: center; gap: 2px;
+            max-width: 95vw; overflow-x: auto; scrollbar-width: none;
         }
+        .nav-container::-webkit-scrollbar { display: none; }
+        
         .nav-container a {
             position: relative; z-index: 2; color: white; text-decoration: none;
-            font-weight: 700; font-size: 11px; text-transform: uppercase;
-            padding: 10px 20px; transition: 0.3s; opacity: 0.7;
+            font-weight: 700; font-size: 10px; text-transform: uppercase;
+            padding: 10px 18px; transition: 0.3s; opacity: 0.6; white-space: nowrap;
         }
         .nav-container a.active { opacity: 1; }
         .nav-slider {
-            position: absolute; height: calc(100% - 10px); width: 80px;
-            background: rgba(255, 255, 255, 0.2); border-radius: 50px;
-            top: 5px; left: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: absolute; height: calc(100% - 10px);
+            background: rgba(0, 174, 239, 0.5); border-radius: 50px;
+            top: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
+        /* --- HERO TEXT --- */
         .hero-title {
-            font-size: clamp(60px, 10vw, 120px); font-weight: 900; text-transform: uppercase;
-            letter-spacing: -5px; margin-top: 20px; line-height: 0.8;
-            animation: slideUpLogo 1s ease 0.2s forwards; opacity: 0;
+            font-size: clamp(50px, 15vw, 120px); font-weight: 900; text-transform: uppercase;
+            letter-spacing: -3px; margin-top: 20px; line-height: 0.8;
+            animation: slideUp 1s ease 0.2s forwards; opacity: 0;
         }
         .hero-sub {
-            font-size: 20px; font-weight: 700; color: #00AEEF; margin-bottom: 10px;
-            animation: slideUpLogo 1s ease 0.4s forwards; opacity: 0;
+            font-size: 16px; font-weight: 700; color: #00AEEF; margin-bottom: 20px;
+            letter-spacing: 2px; animation: slideUp 1s ease 0.4s forwards; opacity: 0;
         }
 
-        /* --- CLEAN HORIZONTAL SLIDER (No Frames) --- */
+        /* --- PHOTO SLIDER --- */
         .slider-container { 
-            padding: 20px 0 40px; width: 100%; position: relative; 
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); 
-            mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); 
+            padding: 10px 0 30px; width: 100%; position: relative; 
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%); 
+            mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%); 
         }
         .slider-wrapper { 
-            display: flex; flex-direction: row; gap: 20px; overflow-x: auto; 
-            scroll-behavior: smooth; padding: 20px 8%; scrollbar-width: none; 
+            display: flex; flex-direction: row; gap: 15px; overflow-x: auto; 
+            scroll-behavior: smooth; padding: 20px 10%; scrollbar-width: none; 
         }
         .slider-wrapper::-webkit-scrollbar { display: none; }
 
         .about-photo { 
-            flex: 0 0 400px; height: 300px; object-fit: cover; border-radius: 25px; 
-            cursor: pointer; transition: 0.4s ease; 
-            animation: slideUpLogo 1s ease 0.6s forwards; opacity: 0;
+            flex: 0 0 280px; height: 200px; object-fit: cover; border-radius: 20px; 
+            cursor: pointer; transition: 0.4s ease; border: 1px solid rgba(255,255,255,0.1);
+            animation: slideUp 1s ease 0.6s forwards; opacity: 0;
         }
-        .about-photo:hover { transform: scale(1.05); filter: brightness(1.2); }
+        @media (min-width: 768px) {
+            .about-photo { flex: 0 0 400px; height: 300px; }
+        }
+        .about-photo:hover { transform: translateY(-5px); border-color: #00AEEF; }
 
-        /* --- ZOOM MODAL WITH DETAILS --- */
+        /* --- CONTENT CARD --- */
+        .content-card {
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(25px);
+            width: 90%; max-width: 900px; border-radius: 30px; padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 60px; line-height: 1.6;
+            animation: slideUp 1s ease 0.8s forwards; opacity: 0;
+        }
+        @media (min-width: 768px) {
+            .content-card { padding: 60px; }
+        }
+
+        h2 { font-size: 28px; font-weight: 900; margin: 30px 0 15px; text-transform: uppercase; color: #00AEEF; }
+        h2:first-child { margin-top: 0; }
+        p { font-size: 15px; opacity: 0.9; margin-bottom: 20px; }
+
+        .highlight-box {
+            background: rgba(0, 174, 239, 0.1); border-left: 4px solid #00AEEF;
+            padding: 20px; border-radius: 10px; margin: 25px 0; font-style: italic;
+        }
+
+        /* --- MODAL --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: none; flex-direction: column;
+            background: rgba(0,0,0,0.95); display: none; flex-direction: column;
             justify-content: center; align-items: center; z-index: 5000; backdrop-filter: blur(15px);
+            padding: 20px;
         }
         .modal.active { display: flex; }
-        
         .modal-content { 
-            max-width: 80%; max-height: 70%; border-radius: 20px; 
-            animation: zoomInEffect 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            border: 2px solid rgba(255,255,255,0.2);
+            width: 100%; max-width: 800px; border-radius: 15px; 
+            animation: zoomIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
+        .modal-details { margin-top: 20px; text-align: center; max-width: 500px; }
+        .modal-details h3 { font-size: 20px; color: #00AEEF; text-transform: uppercase; margin-bottom: 10px; }
+        .modal-details p { font-size: 14px; opacity: 0.8; }
 
-        .modal-details {
-            margin-top: 20px; text-align: center; max-width: 600px;
-            animation: slideUpLogo 0.5s ease forwards;
-        }
-        .modal-details h3 { font-size: 24px; color: #00AEEF; text-transform: uppercase; margin-bottom: 5px; }
-        .modal-details p { font-size: 14px; opacity: 0.8; line-height: 1.5; }
-
-        @keyframes zoomInEffect {
-            from { transform: scale(0.7); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- TEXT CONTENT --- */
-        .content-card {
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px);
-            width: 90%; max-width: 900px; border-radius: 30px; padding: 60px;
-            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 100px; line-height: 1.8;
-            animation: slideUpLogo 1s ease 0.8s forwards; opacity: 0;
-        }
-        h2 { font-size: 40px; font-weight: 900; margin-bottom: 20px; text-transform: uppercase; color: #00AEEF; }
-
-        @media (max-width: 768px) {
-            .about-photo { flex: 0 0 300px; height: 220px; }
-            .content-card { padding: 30px; }
-        }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -168,16 +173,18 @@
 
     <div class="content-card">
         <h2>History of Alabat</h2>
-        <p>Alabat, officially the <strong>Municipality of Alabat</strong> (Tagalog: Bayan ng Alabat), is a municipality in the province of Quezon, Philippines. According to the 2024 census, it has a population of 15,744 people.</p>
+        <p>Alabat, officially the <strong>Municipality of Alabat</strong> (Tagalog: Bayan ng Alabat), is a municipality in the province of Quezon, Philippines. It is a peaceful island town known for its hospitality and rich natural resources.</p>
+        
         <p>The town is home to a few speakers of the critically endangered <strong>Inagta Alabat language</strong>, one of the most endangered languages in the world as listed by UNESCO.</p>  
 
         <div class="highlight-box">
             Founded in the year 1882 by a Spanish priest from Gumaca, the town originally built an ermita that honours Our Lady of Monte Carmelo.
         </div>
-        <p>Its first name was <strong>Gordo</strong>, which means "fat", due to the island's shape. It was changed to Gordon, Barcelona, and later on Alabat. The formal establishment of the town occurred in the year 1900.</p>
+        
+        <p>Its first name was <strong>Gordo</strong>, meaning "fat", due to the island's shape. It was later changed to Gordon, Barcelona, and finally Alabat. The formal establishment of the town occurred in the year 1900.</p>
+        
         <h2>Etymology</h2>
-        <p>Before Spanish colonization, the mountains were already inhabited by the “Baluga” (aborigines). Nomadic by nature, they would clean patches of land, plant rice and vegetables and hunt.</p>
-        <p>Local folklore says that a Spanish priest from the mainland saw the Island from across Lamon Bay. He crossed the bay on a boat and founded a church at what is today barangay Gordon.</p>
+        <p>Before Spanish colonization, the mountains were already inhabited by the “Baluga” (aborigines). Nomadic by nature, they would clean patches of land, plant rice and vegetables, and hunt.</p>
 
         <p>The name Alabat came from the word <strong>Alâbât</strong> (local Tagalog word for balustrade or balcony).</p>
 
@@ -196,7 +203,6 @@
         window.addEventListener('load', updateNavSlider);
         window.addEventListener('resize', updateNavSlider);
 
-        // Enhanced Zoom Logic with Details
         const modal = document.getElementById('zoomModal');
         const modalImg = document.getElementById('modalImg');
         const modalTitle = document.getElementById('modalTitle');
