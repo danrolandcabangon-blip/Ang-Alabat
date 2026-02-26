@@ -10,174 +10,116 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
         body {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
                         url('background.jpg') no-repeat center center fixed; 
             background-size: cover; color: white; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            position: relative;
         }
 
-        /* --- LOGO ANIMATION --- */
-        @keyframes slideUpLogo {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* --- ARIYA LOGO (Top Left) --- */
+        /* --- NAVIGATION & LOGO --- */
         .top-left-logo {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            width: 150px; 
-            height: auto;
-            z-index: 2000;
-            pointer-events: none;
-            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            position: absolute; top: 20px; left: 20px; width: 100px; 
+            z-index: 2000; opacity: 0.8;
         }
 
-        .logo-wrapper {
-            display: flex;
-            justify-content: center;
-            padding-top: 30px;
-            width: 100%;
-            animation: slideUpLogo 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
-        .nav-logo {
-            height: 70px;
-            width: auto;
-            display: block;
-        }
+        .logo-wrapper { display: flex; justify-content: center; padding-top: 40px; width: 100%; }
+        .nav-logo { height: 60px; filter: drop-shadow(0 0 10px rgba(0,174,239,0.3)); }
 
         nav { 
-            display: flex; 
-            justify-content: center; 
-            padding: 20px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            width: 100%;
+            display: flex; justify-content: center; padding: 15px; position: sticky; 
+            top: 0; z-index: 1000; width: 100%;
         }
         
         .nav-container {
-            position: relative;
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(15px);
-            padding: 5px; 
-            border-radius: 50px; 
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            position: relative; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
+            padding: 5px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; max-width: 95vw; overflow-x: auto; scrollbar-width: none;
         }
+        .nav-container::-webkit-scrollbar { display: none; }
 
-        .nav-container a {
-            position: relative;
-            z-index: 2;
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 12px;
-            text-transform: uppercase;
-            padding: 10px 25px;
-            transition: 0.3s;
-            opacity: 0.7;
+        .nav-links { display: flex; list-style: none; position: relative; z-index: 2; }
+        .nav-links a { 
+            color: white; text-decoration: none; font-size: 10px; font-weight: 700; 
+            text-transform: uppercase; padding: 10px 18px; display: inline-block; 
+            transition: 0.3s; opacity: 0.6; white-space: nowrap;
         }
-
-        .nav-container a.active { opacity: 1; }
+        .nav-links a.active { opacity: 1; }
 
         .nav-slider {
-            position: absolute;
-            height: calc(100% - 10px);
-            width: 100px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            top: 5px;
-            left: 5px;
-            z-index: 1;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute; height: calc(100% - 10px);
+            background: rgba(0, 174, 239, 0.5); border-radius: 50px;
+            top: 5px; z-index: 1; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
+        /* --- CHECKOUT CARD --- */
         .checkout-card {
-            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px);
-            width: 90%; max-width: 800px; border-radius: 30px;
-            padding: 40px; border: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 50px;
-            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(25px);
+            width: 90%; max-width: 600px; border-radius: 35px;
+            padding: 30px; border: 1px solid rgba(255,255,255,0.1);
+            margin: 30px 0 60px;
         }
 
-        .header-row { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        .header-row span { text-transform: uppercase; font-weight: 900; font-size: 14px; color: #888; }
+        .section-label { font-size: 11px; font-weight: 900; color: #00AEEF; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px; display: block; }
 
-        .item-list { margin-bottom: 30px; }
-        .item-row { display: flex; align-items: center; gap: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; margin-bottom: 10px; }
-        .item-row img { width: 100px; height: 60px; object-fit: cover; border-radius: 10px; }
+        .item-row { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .item-row img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; }
         .item-info { flex: 1; }
-        .item-info h3 { font-size: 18px; font-weight: 900; }
-        .item-info p { font-size: 11px; opacity: 0.6; margin-top: 4px; }
-        .item-qty { font-size: 24px; font-weight: 900; width: 50px; text-align: center; }
+        .item-info h3 { font-size: 14px; font-weight: 900; text-transform: uppercase; }
+        .item-info p { font-size: 12px; color: #00AEEF; font-weight: 700; }
+        .item-qty { font-weight: 900; font-size: 18px; color: white; }
 
-        .payment-section { display: flex; flex-direction: column; align-items: flex-end; gap: 15px; }
-        .recipient-input { background: rgba(255,255,255,0.1); color: white; border: 1px solid #555; padding: 12px; border-radius: 10px; font-weight: 700; width: 300px; }
-        .recipient-label { font-size: 12px; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 5px; width: 300px; text-align: left; }
-
-        .payment-options { display: flex; gap: 10px; width: 300px; margin-bottom: 10px; }
-        .option-tile {
-            flex: 1; padding: 15px 10px; background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 15px;
-            cursor: pointer; text-align: center; transition: 0.3s;
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
+        /* --- INPUTS --- */
+        .form-group { margin: 25px 0; }
+        .recipient-input { 
+            width: 100%; background: rgba(255,255,255,0.05); color: white; 
+            border: 1px solid rgba(255,255,255,0.2); padding: 15px; border-radius: 15px; 
+            font-weight: 700; outline: none; transition: 0.3s;
         }
-        .option-tile span { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #888; }
-        .option-tile.active { background: white; border-color: white; }
-        .option-tile.active span { color: black; }
+        .recipient-input:focus { border-color: #00AEEF; background: rgba(255,255,255,0.1); }
 
-        #online-payment-area { display: none; text-align: center; margin: 15px 0; background: white; color: black; padding: 20px; border-radius: 20px; width: 100%; max-width: 300px; }
-        #online-payment-area img { width: 180px; height: 180px; margin-bottom: 10px; object-fit: contain; }
-        .tx-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px; }
+        .payment-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .option-tile {
+            padding: 15px; background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent; border-radius: 18px;
+            cursor: pointer; text-align: center; transition: 0.3s;
+        }
+        .option-tile span { font-size: 11px; font-weight: 900; text-transform: uppercase; opacity: 0.6; }
+        .option-tile.active { background: rgba(0, 174, 239, 0.2); border-color: #00AEEF; }
+        .option-tile.active span { opacity: 1; color: #00AEEF; }
 
-        .total-box { margin-top: 10px; text-align: right; }
-        .total-box h2 { font-size: 32px; font-weight: 900; }
+        #online-payment-area { 
+            display: none; text-align: center; margin-top: 20px; 
+            background: white; color: black; padding: 20px; border-radius: 25px; 
+        }
+        #online-payment-area img { width: 100%; max-width: 200px; margin-bottom: 10px; }
+
+        .total-box { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; border-top: 2px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .total-box h2 { font-size: 28px; font-weight: 900; color: #00AEEF; }
 
         .place-order-btn {
-            background: none; color: white; border: 2px solid white; padding: 15px 40px;
-            border-radius: 50px; font-weight: 900; font-size: 20px; cursor: pointer;
+            background: #00AEEF; color: white; border: none; padding: 20px;
+            border-radius: 50px; font-weight: 900; font-size: 16px; cursor: pointer;
             margin-top: 20px; transition: 0.3s; width: 100%; text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(0,174,239,0.3);
         }
-        .place-order-btn:hover { background: white; color: black; }
+        .place-order-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        /* Receipt Popup */
+        /* --- RECEIPT MODAL --- */
         #receipt-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 2000;
+            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 5000; padding: 20px;
         }
         .receipt-card { 
-            background: white url('ariya.jpg') no-repeat center center;
-            background-size: cover;
-            color: black; padding: 40px; border-radius: 30px; width: 400px; text-align: center; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            position: relative;
+            background: white; color: black; padding: 40px 30px; border-radius: 35px; 
+            width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
-        .receipt-card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.85); border-radius: 30px; z-index: 1;
-        }
-        .receipt-content { position: relative; z-index: 2; }
+        .order-num-box { background: #f0f0f0; padding: 20px; border-radius: 20px; margin: 20px 0; border: 2px dashed #00AEEF; }
+        .order-num-box span { font-size: 10px; font-weight: 900; color: #888; }
+        .order-num-box h3 { font-family: monospace; font-size: 32px; color: #111; }
 
-        .booth-num { background: #00AEEF; color: white; padding: 12px; border-radius: 12px; font-weight: 900; margin: 20px 0 10px 0; font-size: 18px; text-transform: uppercase; }
-        .tx-display-box { 
-            background: rgba(244, 244, 244, 0.8); 
-            padding: 15px; 
-            border-radius: 15px; 
-            margin-top: 10px; 
-            border: 1px dashed #ccc;
-        }
-        .tx-label { font-size: 10px; color: #888; text-transform: uppercase; font-weight: 900; margin-bottom: 5px; }
-        .tx-value { font-size: 24px; color: #000; font-weight: 900; font-family: monospace; letter-spacing: 1px; }
-
-        .return-btn {
-            background: black; color: white; border: none; padding: 15px 40px;
-            border-radius: 50px; font-weight: 900; font-size: 18px; cursor: pointer;
-            margin-top: 25px; width: 100%; text-transform: uppercase;
+        @media (min-width: 1024px) {
+            .top-left-logo { width: 140px; }
+            .nav-logo { height: 80px; }
         }
     </style>
 </head>
@@ -185,84 +127,75 @@
     <img src="ariya.jpg" alt="Ariya Brand Logo" class="top-left-logo">
 
     <div class="logo-wrapper">
-        <a href="index.html">
-            <img src="AlabatLogo.png" alt="Alabat Tourism Logo" class="nav-logo">
-        </a>
+        <a href="index.html"><img src="AlabatLogo.png" alt="Alabat Tourism Logo" class="nav-logo"></a>
     </div>
 
     <nav>
         <div class="nav-container">
             <div class="nav-slider" id="navSlider"></div>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="destinations.html">Destinations</a>
-            <a href="products.html" class="active" id="activeLink">Products</a>
-            <a href="contact.html">Contact</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="products.html" class="active" id="activeLink">Products</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
     <div class="checkout-card">
-        <div class="header-row">
-            <span>Item</span>
-            <span>Quantity</span>
+        <span class="section-label">Order Summary</span>
+        <div id="checkout-list"></div>
+
+        <div class="form-group">
+            <span class="section-label">Recipient Details</span>
+            <input type="text" id="recipientName" class="recipient-input" placeholder="Your Full Name">
         </div>
 
-        <div id="checkout-list" class="item-list"></div>
-
-        <div class="payment-section">
-            <div style="display:flex; flex-direction:column;">
-                <label class="recipient-label">1. Recipient Information</label>
-                <input type="text" id="recipientName" class="recipient-input" placeholder="Enter Full Name">
-            </div>
-
-            <div style="display:flex; flex-direction:column; margin-top: 10px;">
-                <label class="recipient-label">2. Choose Payment Method</label>
-                <div class="payment-options">
-                    <div class="option-tile active" id="opt-inperson" onclick="setPayment('In-Person')">
-                        <span>In-Person</span>
-                    </div>
-                    <div class="option-tile" id="opt-online" onclick="setPayment('Online')">
-                        <span>Online</span>
-                    </div>
+        <div class="form-group">
+            <span class="section-label">Payment Method</span>
+            <div class="payment-options">
+                <div class="option-tile active" id="opt-inperson" onclick="setPayment('In-Person')">
+                    <span>Pay at Booth</span>
                 </div>
-                <select id="paymentMethod" style="display: none;">
-                    <option value="In-Person">In-Person Payment</option>
-                    <option value="Online">Online Payment</option>
-                </select>
+                <div class="option-tile" id="opt-online" onclick="setPayment('Online')">
+                    <span>GCash / Online</span>
+                </div>
             </div>
-
-            <div id="online-payment-area">
-                <p style="font-weight: 900; margin-bottom: 5px;">SCAN TO PAY</p>
-                <img src="gcashcode.jpg" alt="GCash QR Code">
-                <input type="text" id="transactionNo" class="tx-input" placeholder="Enter Reference No. (GCash)">
-            </div>
-
-            <div class="total-box">
-                <span style="opacity:0.6; font-weight:700;">TOTAL</span>
-                <h2 id="grand-total">₱0.00</h2>
-            </div>
-
-            <button class="place-order-btn" onclick="processOrder()">Place Order</button>
+            <input type="hidden" id="paymentMethod" value="In-Person">
         </div>
+
+        <div id="online-payment-area">
+            <p style="font-weight: 900; margin-bottom: 10px; font-size: 12px;">SCAN TO PAY VIA GCASH</p>
+            <img src="gcashcode.jpg" alt="GCash QR Code">
+            <input type="text" id="transactionNo" class="recipient-input" placeholder="Ref Number" style="color: black; border-color: #ddd;">
+        </div>
+
+        <div class="total-box">
+            <span style="font-weight: 900; opacity: 0.8;">GRAND TOTAL</span>
+            <h2 id="grand-total">₱0.00</h2>
+        </div>
+
+        <button class="place-order-btn" onclick="processOrder()">Confirm Order</button>
     </div>
 
     <div id="receipt-modal">
         <div class="receipt-card">
-            <div class="receipt-content">
-                <h2 style="font-weight:900; font-size: 28px;">THANK YOU!</h2>
-                <p id="receiptRecipient" style="margin-top: 10px; font-weight: 700; font-size: 18px;"></p>
-                <p style="font-size: 14px; opacity: 0.8;">Your order has been recorded.</p>
-                
-                <div class="booth-num">ALABAT BOOTH No. 23</div>
-                
-                <div class="tx-display-box">
-                    <div class="tx-label">REFERENCE NUMBER</div>
-                    <div id="receiptOrderNum" class="tx-value"></div>
-                </div>
-
-                <p style="font-size:12px; color:#555; margin-top: 15px; font-weight: 600;">Please show this to the claiming station.</p>
-                <button onclick="window.location.href='index.html'" class="return-btn">Return Home</button>
+            <h2 style="font-weight: 900;">THANK YOU!</h2>
+            <p style="font-size: 14px; opacity: 0.7; margin-top: 5px;">Show this to the claiming station.</p>
+            
+            <div class="order-num-box">
+                <span>REFERENCE NUMBER</span>
+                <h3 id="receiptOrderNum">ORD-000000</h3>
             </div>
+
+            <p id="receiptRecipient" style="font-weight: 800; text-transform: uppercase; margin-bottom: 20px;"></p>
+            
+            <div style="background: #00AEEF; color: white; padding: 15px; border-radius: 15px; font-weight: 900;">
+                CLAIM AT BOOTH No. 23
+            </div>
+
+            <button onclick="window.location.href='index.html'" class="place-order-btn" style="background: black;">Back to Home</button>
         </div>
     </div>
 
@@ -284,24 +217,23 @@
 
         function loadItems() {
             if (cart.length === 0) {
-                listDiv.innerHTML = "<p>Your cart is empty.</p>";
+                listDiv.innerHTML = "<p style='text-align:center; padding: 20px; opacity:0.5;'>Your basket is empty.</p>";
                 return;
             }
             let totalCash = 0;
-            listDiv.innerHTML = "";
-            cart.forEach(item => {
+            listDiv.innerHTML = cart.map(item => {
                 const priceNum = parseFloat(item.price.replace(/[₱,]/g, ''));
                 totalCash += priceNum * item.quantity;
-                listDiv.innerHTML += `
+                return `
                     <div class="item-row">
                         <img src="${item.img}">
                         <div class="item-info">
                             <h3>${item.name}</h3>
                             <p>${item.price}</p>
                         </div>
-                        <div class="item-qty">${item.quantity}</div>
+                        <div class="item-qty">x${item.quantity}</div>
                     </div>`;
-            });
+            }).join('');
             totalDisplay.innerText = `₱${totalCash.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
         }
 
@@ -317,34 +249,12 @@
             const method = document.getElementById('paymentMethod').value;
             const txNo = document.getElementById('transactionNo').value;
             
+            if (!recipient.trim()) return alert("Please enter your name.");
+            if (method === 'Online' && !txNo.trim()) return alert("Please enter the GCash reference number.");
+
             const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
 
-            if (recipient.trim() === "") {
-                alert("Please enter the recipient's name.");
-                return;
-            }
-
-            if (method === 'Online' && txNo.trim() === "") {
-                alert("Please enter GCash reference number.");
-                return;
-            }
-
-            const newOrder = {
-                orderID: orderId,
-                recipient: recipient,
-                items: cart,
-                total: totalDisplay.innerText,
-                paymentMode: method,
-                transactionNo: txNo || "CASH",
-                status: 'pending',
-                timestamp: new Date().toLocaleString()
-            };
-
-            let orders = JSON.parse(localStorage.getItem('alabat_orders')) || [];
-            orders.push(newOrder);
-            localStorage.setItem('alabat_orders', JSON.stringify(orders));
-
-            document.getElementById('receiptRecipient').innerText = "Recipient: " + recipient;
+            document.getElementById('receiptRecipient').innerText = recipient;
             document.getElementById('receiptOrderNum').innerText = orderId; 
             document.getElementById('receipt-modal').style.display = 'flex';
             
