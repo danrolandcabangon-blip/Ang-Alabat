@@ -175,9 +175,6 @@
                         allow="autoplay; encrypted-media" allowfullscreen>
                 </iframe>
             </div>
-            <p style="font-size: 11px; margin-top: 10px; opacity: 0.8; text-align: center; color: #00AEEF; font-weight: bold;">
-                Click the video to Play with Music & Switch Videos
-            </p>
         </div>
         <div class="slider-section">
             <div class="product-list" id="products-list"></div>
@@ -204,7 +201,6 @@
         function changeVideo() {
             vIdx = (vIdx + 1) % myVideos.length;
             const newId = myVideos[vIdx];
-            // Autoplay=1 is added here so when you click to CHANGE, it plays the next one automatically
             videoFrame.src = `https://www.youtube.com/embed/${newId}?autoplay=1&loop=1&playlist=${newId}`;
         }
 
@@ -268,4 +264,5 @@
     </script>
 </body>
 </html>
+
 
